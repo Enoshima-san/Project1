@@ -1,1 +1,43 @@
 Дорофеев Игорь
+
+
+#include <iostream>
+#include <fstream>
+#include <string>
+using namespace std;
+int main() {
+	system("chcp 1251");
+	struct Product { 
+		string Seller; 
+		int Amount; 
+		int Price; 
+		string Manufacturer;
+		string Date; 
+	};
+	Product P_List[10]; 
+	Product Example;
+	Example.Seller = "Mayak"; Example.Amount = 25; Example.Price = 150000; Example.Manufacturer = "China"; Example.Date = "February";
+	cout << Example.Seller << " " << Example.Amount << " " << Example.Price << " " << Example.Manufacturer << " " << Example.Date << endl;
+	fstream inFile("List.txt", ios::in);
+	if (!inFile) {
+		cout << "Error: невозможно открыть файл \"List.txt\"" << endl;
+		exit(1);
+	}
+	int i = 0; 
+	while (!inFile.eof()) {
+		inFile >> P_List[i].Seller >> P_List[i].Amount >> P_List[i].Price 
+		>> P_List[i].Manufacturer >> P_List[i].Date;
+		i++;
+	}
+	fstream outFile3("ListOut.txt", ios::out);
+	for (int j = 0; j < i; j++){
+		if (P_List[j].Amount < 35) {
+			outFile3 << P_List[j].Seller << " " << P_List[j].Amount << " " << P_List[j].Price << " "
+				<< P_List[j].Manufacturer << " " << P_List[j].Date << endl;
+		}
+		
+	}
+	outFile3.close();
+	inFile.close();
+	return 0;
+}
