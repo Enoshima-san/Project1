@@ -5,30 +5,39 @@
 #include <fstream>
 #include <string>
 using namespace std;
-int main() {
+int main() {/*
+	* Предусловие: программиа считывает данные продукта из файла "List.txt"
+	* Постусловие: программа копирует из файла "List.txt" данные о количестве продукта меньше 35 и записывает их в файл "ListOut.txt"
+	*/
 	system("chcp 1251");
-	struct Product { 
-		string Seller; 
-		int Amount; 
-		int Price; 
-		string Manufacturer;
-		string Date; 
+	//------------------ Блок программы задачи структуры Product
+	struct Product { // Стуктура Product 
+		string Seller; // строковая переменная Seller - название продавца продукта
+		int Amount; // целочисленная переменная Amount - количество продукта
+		int Price; // целочисленная переменная Price - цена продукта
+		string Manufacturer; // строковая переменная Manufacturer - страна производителя продукта
+		string Date; // строковая переменная Date - дата изготовления продукта
 	};
-	Product P_List[10]; 
+	Product P_List[10]; // Структурная переменная P_List - 10 продуктов
 	Product Example;
+	//------------------ Блок - пример
 	Example.Seller = "Mayak"; Example.Amount = 25; Example.Price = 150000; Example.Manufacturer = "China"; Example.Date = "February";
 	cout << Example.Seller << " " << Example.Amount << " " << Example.Price << " " << Example.Manufacturer << " " << Example.Date << endl;
-	fstream inFile("List.txt", ios::in);
+	//------------------
+	fstream inFile("List.txt", ios::in); // Вызов файла "List.txt" из корневой папки проекта 
+	//------------------ Блок вызова предупреждения о ненаходе файла и выхода из функции
 	if (!inFile) {
 		cout << "Error: невозможно открыть файл \"List.txt\"" << endl;
 		exit(1);
 	}
-	int i = 0; 
+	//----------------- Блок заполнения файловой переменной inFile информации
+	int i = 0; // Целочисленная переменная-счётчик
 	while (!inFile.eof()) {
 		inFile >> P_List[i].Seller >> P_List[i].Amount >> P_List[i].Price 
 		>> P_List[i].Manufacturer >> P_List[i].Date;
 		i++;
 	}
+	//----------------- Блок записи данных в файл "ListOut.txt" продукта, количества которого меньше 35 
 	fstream outFile3("ListOut.txt", ios::out);
 	for (int j = 0; j < i; j++){
 		if (P_List[j].Amount < 35) {
@@ -37,6 +46,7 @@ int main() {
 		}
 		
 	}
+	//---------------- Блок закрытия файлов
 	outFile3.close();
 	inFile.close();
 	return 0;
